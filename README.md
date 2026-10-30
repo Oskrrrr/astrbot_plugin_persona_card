@@ -21,7 +21,7 @@
 | 随时恢复 | 「解绑」清掉该会话覆盖，回到全局默认 |
 | 从现有会话抄作业 | 「存为卡」把当前会话的人格/模型/知识库/表情包生成一张新卡 |
 | 风格补充 | 卡片里的 `prompt_append` 追加到该会话系统提示词 |
-| 和说说外挂联动 | 给 [qzone_ext](https://github.com/Oskrrrr/astrbot_plugin_qzone_ext) 提供说说提示词、画风、画面要求/负面词 |
+| 和说说管家联动 | 给 [QQ空间说说管家](https://github.com/Oskrrrr/astrbot_plugin_qzone_ext) 提供说说提示词、画风、画面要求/负面词 |
 
 ## 🚀 快速开始
 
@@ -43,7 +43,7 @@
 | 知识库 | 会话级 `kb_config.kb_ids`；可多选 |
 | 表情包 | 会话级选包规则；最多 5 个，需在 [meme_manager](https://github.com/anka-afk/astrbot_plugin_meme_manager) 里已启用 |
 | 风格补充 | 追加到该会话系统提示词的稳定文本 |
-| 说说板块 | 给 [QQ空间外挂](https://github.com/Oskrrrr/astrbot_plugin_qzone_ext) 读取的 `post_prompt` / `image_style` / `image_requirements` / `image_negative` |
+| 说说板块 | 给 [QQ空间说说管家](https://github.com/Oskrrrr/astrbot_plugin_qzone_ext) 读取的 `post_prompt` / `image_style` / `image_requirements` / `image_negative` |
 
 「应用」写入的是 AstrBot 原生的会话级偏好（`session_service_config` / `provider_perf_*` / `kb_config`），所以切换立即生效，也不需要改别人插件的代码。
 
@@ -54,15 +54,15 @@
 - 如果某个包后来被禁用/删除，应用时会跳过并给出警告。
 - 没装 [meme_manager](https://github.com/anka-afk/astrbot_plugin_meme_manager) 时，表情包板块自动留空，不影响其它字段。
 
-## 🌌 与 [QQ空间外挂](https://github.com/Oskrrrr/astrbot_plugin_qzone_ext)
+## 🌌 与 [QQ空间说说管家](https://github.com/Oskrrrr/astrbot_plugin_qzone_ext)
 
-装了 [astrbot_plugin_qzone_ext](https://github.com/Oskrrrr/astrbot_plugin_qzone_ext) 时，说说外挂会通过本插件的 `qzone_profile()` 读取当前人格对应卡片的「说说」板块：
+装了 [QQ空间说说管家](https://github.com/Oskrrrr/astrbot_plugin_qzone_ext) 时，说说管家会通过本插件的 `qzone_profile()` 读取当前人格对应卡片的「说说」板块：
 
 - 说说写作要求
 - 配图画风
 - 画面要求 / 负面词
 
-没装说说外挂时，这些字段只是存着，不影响聊天。
+没装说说管家时，这些字段只是存着，不影响聊天。
 
 ## 🧩 与 [meme_manager](https://github.com/anka-afk/astrbot_plugin_meme_manager)
 
