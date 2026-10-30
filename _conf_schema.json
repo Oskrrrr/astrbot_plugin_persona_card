@@ -1,0 +1,14 @@
+{
+  "record_sessions": {
+    "description": "记录出现过的会话",
+    "type": "bool",
+    "default": true,
+    "hint": "开启后，插件会记下收到过消息的群/私聊，页面里可以直接选；关掉就只能在页面手填会话标识。"
+  },
+  "flush_interval": {
+    "description": "会话记录落盘间隔（秒）",
+    "type": "int",
+    "default": 60,
+    "hint": "为了不给消息处理添负担，会话记录先放内存，按这个间隔写回 cards.json。"
+  }
+}

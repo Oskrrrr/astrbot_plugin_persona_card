@@ -1,0 +1,150 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>角色卡</title>
+    <link rel="stylesheet" href="./style.css" />
+  </head>
+  <body>
+    <div class="wrap">
+      <header class="topbar">
+        <div class="brand">
+          <span class="brand-logo">🎴</span>
+          <div class="brand-text">
+            <h1>角色卡</h1>
+            <p>人格 · 音色 · 聊天模型 · 知识库 · 表情包，一张卡打包切换</p>
+          </div>
+        </div>
+        <div class="top-actions">
+          <button type="button" id="btnReload" class="ghost">刷新</button>
+          <button type="button" id="btnNew" class="primary">＋ 新建角色卡</button>
+        </div>
+      </header>
+
+      <div class="grid">
+        <aside class="panel cards">
+          <div class="panel-head">
+            <h2>角色卡</h2>
+            <span class="muted" id="cardCount"></span>
+          </div>
+          <ul class="card-list" id="cardList"></ul>
+        </aside>
+
+        <section class="panel editor">
+          <div class="panel-head">
+            <h2 id="editorTitle">编辑角色卡</h2>
+            <span class="muted" id="editorState"></span>
+          </div>
+
+          <form id="cardForm" class="form" autocomplete="off">
+            <div class="row">
+              <label class="field emoji">
+                <span>图标</span>
+                <input id="fEmoji" maxlength="4" placeholder="🐟" />
+              </label>
+              <label class="field grow">
+                <span>名称</span>
+                <input id="fName" maxlength="40" placeholder="例如：米雪儿" />
+              </label>
+            </div>
+
+            <label class="field">
+              <span>人格</span>
+              <select id="fPersona"></select>
+              <small>决定 system prompt、记忆隔离；选「跟随会话默认」则不强制。</small>
+            </label>
+
+            <label class="field">
+              <span>风格补充（只在这个卡的会话里追加，不污染别的人格）</span>
+              <textarea id="fPrompt" rows="4" maxlength="1500" placeholder="例如：接话先看懂大家在聊什么；不要用反问句收尾，整段最多一个问号。"></textarea>
+              <small>应用后会在系统提示词末尾追加一段，只对绑定了这张卡的会话生效。</small>
+            </label>
+
+            <div class="row">
+              <label class="field grow">
+                <span>音色（TTS 提供方）</span>
+                <select id="fTts"></select>
+                <small>每个提供方里存着各自的复刻音色，换提供方就是换声音。</small>
+              </label>
+              <label class="field grow">
+                <span>聊天模型</span>
+                <select id="fChat"></select>
+                <small>不选则用全局默认模型。</small>
+              </label>
+            </div>
+
+            <div class="field">
+              <span>知识库</span>
+              <div class="chips" id="fKbs"></div>
+              <small>可多选；一个都不选则不使用知识库。</small>
+            </div>
+
+            <div class="field">
+              <span>表情包（可多选）</span>
+              <div class="pack-rows" id="fPacks"></div>
+              <button type="button" class="ghost add-pack" id="btnAddPack">＋ 添加表情包</button>
+              <small>写入 meme_manager 的会话级选包规则；有多条时按顺序优先。</small>
+            </div>
+
+            <div class="qzone-block">
+              <h3>说说 · QQ空间</h3>
+              <p class="hint">说说外挂发说说时会用这里的文本；留空就用说说外挂自己的默认。</p>
+
+              <label class="field">
+                <span>说说写作要求</span>
+                <textarea id="fQzonePost" rows="4" maxlength="2000" placeholder="口癖、常用素材、字数、不要写什么…"></textarea>
+              </label>
+
+              <label class="field">
+                <span>配图画风</span>
+                <textarea id="fQzoneStyle" rows="2" maxlength="600" placeholder="例如：水彩质感，柔和光影，淡彩，留白多"></textarea>
+                <small>说说配图的风格来源；留空则用「画图」插件的画风。</small>
+              </label>
+
+              <div class="row">
+                <label class="field grow">
+                  <span>画面要求（可选覆盖）</span>
+                  <textarea id="fQzoneReq" rows="3" maxlength="600" placeholder="留空用说说外挂的默认：只画静物、不要人物文字、正方形…"></textarea>
+                </label>
+                <label class="field grow">
+                  <span>配图负面词（可选覆盖）</span>
+                  <input id="fQzoneNeg" maxlength="500" placeholder="留空用说说外挂的默认" />
+                </label>
+              </div>
+            </div>
+
+            <label class="field">
+              <span>备注</span>
+              <textarea id="fNotes" rows="2" maxlength="300" placeholder="这张卡是给谁用的、什么场合"></textarea>
+            </label>
+
+            <div class="actions">
+              <button type="submit" class="primary" id="btnSave">保存</button>
+              <button type="button" class="danger ghost" id="btnDelete">删除</button>
+              <span class="msg" id="formMsg"></span>
+            </div>
+          </form>
+        </section>
+
+        <section class="panel sessions">
+          <div class="panel-head">
+            <h2>应用到会话</h2>
+            <span class="muted" id="sessionCount"></span>
+          </div>
+          <div class="session-list" id="sessionList"></div>
+
+          <form id="manualForm" class="manual" autocomplete="off">
+            <input id="manualUmo" placeholder="default:GroupMessage:397714239" />
+            <select id="manualCard"></select>
+            <button type="submit" class="primary">应用</button>
+          </form>
+          <p class="hint">应用后从下一条消息起生效，不需要重启。</p>
+        </section>
+      </div>
+    </div>
+
+    <div class="toast" id="toast" hidden></div>
+    <script type="module" src="./app.js"></script>
+  </body>
+</html>

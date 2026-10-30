@@ -1,0 +1,13 @@
+name: astrbot_plugin_persona_card
+display_name: 角色卡
+short_desc: 人格、音色、模型、知识库、表情包一键绑成角色卡
+desc: 把人格、音色、聊天模型、知识库、表情包绑成一张角色卡，一键应用到某个会话，随时切换。
+version: 0.1.0
+author: dafeiyu
+repo: https://github.com/Oskrrrr/astrbot_plugin_persona_card
+astrbot_version: ">=4.16,<5"
+tags:
+  - 角色卡
+  - 人格
+  - 表情包
+  - 会话
